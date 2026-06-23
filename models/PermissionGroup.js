@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
 const schema =
-new mongoose.Schema(
-{
-    name:String,
+    new mongoose.Schema(
+        {
+            name: String,
 
-    permissions:[String]
-},
-{
-    timestamps:true
-}
-);
+            permissions: [String]
+        },
+        {
+            timestamps: true
+        }
+    );
 
 module.exports =
-mongoose.model(
-    "PermissionGroup",
-    schema
-);
+    mongoose.model(
+        "PermissionGroup",
+        schema
+    );
