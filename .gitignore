@@ -1,0 +1,65 @@
+# dependencies
+node_modules/
+
+# env
+.env
+.env.local
+.env.production
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# uploads
+uploads/
+
+# build
+dist/
+build/
+
+# cache
+.cache/
+coverage/
+
+# mongodb
+mongodb-data/
+
+# redis
+redis-data/
+
+# operating system
+.DS_Store
+Thumbs.db
+
+# vscode
+.vscode/
+
+# jetbrains
+.idea/
+
+# temporary files
+tmp/
+temp/
+
+# lock files (optional)
+# package-lock.json
+
+# firebase
+firebase-service-account.json
+
+# aws
+aws-credentials.json
+
+# test reports
+coverage/
+
+# generated files
+*.pid
+*.seed
+
+# misc
+*.swp
+*.swo
