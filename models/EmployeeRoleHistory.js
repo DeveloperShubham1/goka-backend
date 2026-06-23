@@ -1,45 +1,55 @@
 const mongoose = require("mongoose");
 
-const employeeRoleHistorySchema = new mongoose.Schema(
+const roleHistorySchema = new mongoose.Schema(
     {
-        user_id: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         },
 
-        old_role_id: {
+        roleId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Role"
-        },
-        new_role_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Role"
+            ref: "Role",
+            required: true
         },
 
-        old_manager_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+        roleName: {
+            type: String,
+            required: true
         },
 
-        new_manager_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+        assignedAt: {
+            type: Date,
+            default: Date.now
         },
 
-        changed_by: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+        revokedAt: {
+            type: Date,
+            default: null
         },
 
-        reason: String,
+        assignedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
+
+        reason: {
+            type: String,
+            default: null
+        }
     },
     {
-        timestamps: true
+        timestamps: false
     }
 );
 
-module.exports =
-    mongoose.model(
-        "EmployeeRoleHistory",
-        employeeRoleHistorySchema
-    );
+roleHistorySchema.index({ userId: 1 });
+roleHistorySchema.index({ roleId: 1 });
+roleHistorySchema.index({ revokedAt: 1 });
+
+module.exports = mongoose.model(
+    "RoleHistory",
+    roleHistorySchema
+);

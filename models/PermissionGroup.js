@@ -1,19 +1,29 @@
 const mongoose = require("mongoose");
 
-const schema =
-    new mongoose.Schema(
-        {
-            name: String,
-
-            permissions: [String]
+const permissionGroupSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true
         },
-        {
-            timestamps: true
-        }
-    );
 
-module.exports =
-    mongoose.model(
-        "PermissionGroup",
-        schema
-    );
+        permissions: [
+            {
+                type: String,
+                trim: true
+            }
+        ]
+    },
+    {
+        timestamps: true
+    }
+);
+
+permissionGroupSchema.index({ name: 1 });
+
+module.exports = mongoose.model(
+    "PermissionGroup",
+    permissionGroupSchema
+);

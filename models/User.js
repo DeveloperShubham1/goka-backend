@@ -2,39 +2,49 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
     {
-        employee_code: {
+        name: {
             type: String,
-            unique: true
+            required: true,
+            trim: true
         },
-
-        name: String,
 
         email: {
             type: String,
-            unique: true
+            required: true,
+            unique: true,
+            lowercase: true,
+            trim: true
         },
 
-        phone: String,
+        phone: {
+            type: String,
+            default: null
+        },
 
-        password: String,
+        passwordHash: {
+            type: String,
+            required: true
+        },
 
-        role: {
+        currentRoleId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Role"
+            ref: "Role",
+            required: true
         },
 
-        manager_id: {
+        reportingTo: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             default: null
         },
 
-        device_id: {
-            type: String,
+        managedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
             default: null
         },
 
-        is_active: {
+        isActive: {
             type: Boolean,
             default: true
         }
@@ -44,7 +54,9 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model(
-    "User",
-    userSchema
-);
+userSchema.index({ email: 1 });
+userSchema.index({ currentRoleId: 1 });
+userSchema.index({ reportingTo: 1 });
+userSchema.index({ managedBy: 1 });
+
+module.exports = mongoose.model("User", userSchema);

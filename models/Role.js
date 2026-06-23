@@ -2,22 +2,35 @@ const mongoose = require("mongoose");
 
 const roleSchema = new mongoose.Schema(
     {
-        name: String,
-
-        code: String,
-
-        hierarchy_level: Number,
-
-        permission_group: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "PermissionGroup"
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true
         },
 
-        can_login_web: Boolean,
+        level: {
+            type: Number,
+            default: null
+        },
 
-        can_login_app: Boolean,
+        permissionGroupId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PermissionGroup",
+            required: true
+        },
 
-        is_active: {
+        can_login_web: {
+            type: Boolean,
+            default: false
+        },
+
+        can_login_app: {
+            type: Boolean,
+            default: false
+        },
+
+        isActive: {
             type: Boolean,
             default: true
         }
@@ -27,8 +40,7 @@ const roleSchema = new mongoose.Schema(
     }
 );
 
-module.exports =
-    mongoose.model(
-        "Role",
-        roleSchema
-    );
+roleSchema.index({ name: 1 });
+roleSchema.index({ level: 1 });
+
+module.exports = mongoose.model("Role", roleSchema);
